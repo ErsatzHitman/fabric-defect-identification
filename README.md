@@ -58,3 +58,16 @@ python cnn/train_cnn.py --data data/v1             # cnn/runs/resnet18/metrics.j
 - Model: ViT-Base/16 (ImageNet-21k pretrained), Roboflow hosted training
 
 See `report/report.pdf` for results, the comparison and the failure analysis.
+
+## Results (490-image test split; same split for both models)
+
+| | Roboflow ViT-B/16 | ResNet18 (PyTorch) |
+|---|---|---|
+| Test accuracy (n=490) | 85.7 % | **86.9 %** |
+| Accuracy on the 50 unseen images (`infer.py`) | 88.0 % | **92.0 %** |
+| Recall defective / defect_free | 90.1 % / 74.6 % | 86.6 % / 87.7 % |
+| Training time | 14.2 min (hosted, 16 epochs) | **5.7 min** (RTX 5060, 8 epochs) |
+| Latency per image (median) | 364 ms (REST API) | **28 ms** end-to-end, 3.2 ms forward pass |
+
+Main failure causes: inconsistent labels for blue fabric between the two labelling batches,
+fabric colour acting as a shortcut (lilac ≈ defect_free), and faint few-pixel marks. Details in the report.
