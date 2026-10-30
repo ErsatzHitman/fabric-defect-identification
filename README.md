@@ -56,6 +56,8 @@ python cnn/train_cnn.py --data data/v1             # cnn/runs/resnet18/metrics.j
 - Preprocessing: auto-orient, resize to 512×512
 - Augmentations (train only, 2 outputs per image): horizontal + vertical flip, brightness ±15 %
 - Model: ViT-Base/16 (ImageNet-21k pretrained), Roboflow hosted training
+- Published Workflow: [Fabric Defect Classification](https://app.roboflow.com/nirupama-sinha/workflows/edit/fabric-defect-classification) (image in, `defective` / `defect_free` + confidence out), endpoint
+  `https://serverless.roboflow.com/nirupama-sinha/workflows/fabric-defect-classification`
 
 See `report/report.pdf` for results, the comparison and the failure analysis.
 
