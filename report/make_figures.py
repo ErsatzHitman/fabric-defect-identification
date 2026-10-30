@@ -113,8 +113,16 @@ def main():
     fig.savefig(REP / "fig_confusion.png", dpi=200)
 
     # Figure 2: a sheet of misclassified test images (both-wrong first).
+    # Show different failure types: up to 2 per (fabric, true class) group, most confident errors first.
     errors.sort(key=lambda e: (not e["both_wrong"], e["true"]))
-    show = errors[:8]
+    groups = {}
+    for e in errors:
+        groups.setdefault((e["fabric"], e["true"]), []).append(e)
+    show = []
+    for _ in range(2):
+        for g in sorted(groups):
+            if groups[g] and len(show) < 8:
+                show.append(groups[g].pop(0))
     if show:
         cols = 4
         rows_n = (len(show) + cols - 1) // cols
@@ -125,7 +133,8 @@ def main():
         for ax, e in zip(axes, show):
             p = ROOT / "data/v1/test" / e["true"] / e["image"]
             ax.imshow(Image.open(p))
-            ax.set_title(f"true: {e['true']}\nRF: {e['roboflow']}\nCNN: {e['cnn']}", fontsize=6.5)
+            ax.set_title(f"{e['fabric'].replace(' (unknown)', '')} | true: {e['true']}\n"
+                         f"RF: {e['roboflow']}\nCNN: {e['cnn']}", fontsize=6.5)
         fig.tight_layout()
         fig.savefig(REP / "fig_errors.png", dpi=200)
     print(json.dumps({k: v for k, v in summary.items() if k != "errors"}, indent=1)[:4000])

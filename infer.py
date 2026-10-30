@@ -49,7 +49,7 @@ def main():
     key = os.environ.get("ROBOFLOW_API_KEY")
     if not key:
         raise SystemExit("Set ROBOFLOW_API_KEY in .env")
-    url = f"https://classify.roboflow.com/{PROJECT}/{args.version}?api_key={key}"
+    url = f"https://serverless.roboflow.com/{PROJECT}/{args.version}?api_key={key}"
 
     files = sorted(p for p in args.images.rglob("*") if p.suffix.lower() in EXTS)
     if not files:
