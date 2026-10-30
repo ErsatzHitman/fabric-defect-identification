@@ -1,0 +1,10 @@
+.env
+.venv/
+__pycache__/
+fabric_handoff/
+data/
+test_images/
+cnn/runs/**/*.pt
+*.docx
+scripts/roboflow_images.csv
+scripts/label_log.csv

@@ -1,0 +1,7 @@
+requests
+python-dotenv
+pillow
+torch
+torchvision
+matplotlib
+reportlab
