@@ -1,0 +1,71 @@
+{
+  "model": "resnet18 (ImageNet fine-tune)",
+  "input_size": 512,
+  "epochs": 8,
+  "classes": [
+    "defect_free",
+    "defective"
+  ],
+  "split_sizes": {
+    "train": 6862,
+    "valid": 980,
+    "test": 490
+  },
+  "best_val_acc": 0.8714285714285714,
+  "test_acc": 0.8693877551020408,
+  "confusion_matrix_rows_true_cols_pred": [
+    [
+      121,
+      17
+    ],
+    [
+      47,
+      305
+    ]
+  ],
+  "train_seconds": 343.5527803999139,
+  "latency_ms_per_image_gpu": 3.223001000005752,
+  "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 0.43576362355566345,
+      "val_acc": 0.860204081632653
+    },
+    {
+      "epoch": 2,
+      "loss": 0.37834950984479804,
+      "val_acc": 0.8489795918367347
+    },
+    {
+      "epoch": 3,
+      "loss": 0.33334135715188734,
+      "val_acc": 0.8591836734693877
+    },
+    {
+      "epoch": 4,
+      "loss": 0.3140213116503985,
+      "val_acc": 0.8704081632653061
+    },
+    {
+      "epoch": 5,
+      "loss": 0.2971704093578153,
+      "val_acc": 0.8459183673469388
+    },
+    {
+      "epoch": 6,
+      "loss": 0.27571289021987605,
+      "val_acc": 0.8714285714285714
+    },
+    {
+      "epoch": 7,
+      "loss": 0.2423678300221576,
+      "val_acc": 0.85
+    },
+    {
+      "epoch": 8,
+      "loss": 0.228072532891567,
+      "val_acc": 0.8642857142857143
+    }
+  ]
+}

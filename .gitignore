@@ -8,3 +8,6 @@ cnn/runs/**/*.pt
 *.docx
 scripts/roboflow_images.csv
 scripts/label_log.csv
+.claude/
+scripts/label_run.txt
+scripts/roboflow_train_start.txt
