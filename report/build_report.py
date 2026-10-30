@@ -16,6 +16,7 @@ ss = getSampleStyleSheet()
 H1 = ParagraphStyle("h1", parent=ss["Title"], fontSize=15, spaceAfter=4)
 H2 = ParagraphStyle("h2", parent=ss["Heading2"], fontSize=11.5, spaceBefore=6, spaceAfter=3)
 P = ParagraphStyle("p", parent=ss["BodyText"], fontSize=9.2, leading=12.2, spaceAfter=4)
+CELL = ParagraphStyle("cell", parent=ss["BodyText"], fontSize=8.5, leading=10.5)
 SMALL = ParagraphStyle("s", parent=P, fontSize=8, leading=10, textColor=colors.HexColor("#444444"))
 
 
@@ -24,6 +25,9 @@ def pct(x):
 
 
 def table(rows, widths, header=True):
+    # Wrap every cell in a Paragraph so long text breaks inside its column and entities render.
+    rows = [[Paragraph(f"<b>{c}</b>" if header and i == 0 else str(c), CELL) for c in row]
+            for i, row in enumerate(rows)]
     t = Table(rows, colWidths=widths)
     style = [("FONTSIZE", (0, 0), (-1, -1), 8.5), ("GRID", (0, 0), (-1, -1), 0.4, colors.grey),
              ("VALIGN", (0, 0), (-1, -1), "MIDDLE"), ("TOPPADDING", (0, 0), (-1, -1), 2),
@@ -33,6 +37,13 @@ def table(rows, widths, header=True):
                   ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold")]
     t.setStyle(TableStyle(style))
     return t
+
+
+def fig(name, width):
+    """Place a figure at the given width, keeping its aspect ratio."""
+    from PIL import Image as PILImage
+    w, h = PILImage.open(REP / name).size
+    return Image(str(REP / name), width=width, height=width * h / w)
 
 
 rf, cn = S["roboflow"], S["cnn"]
@@ -80,13 +91,13 @@ story = [
         ["Latency, model forward pass only", "n/a (hosted)", f"{cn['gpu_forward_ms']:.1f} ms"],
     ], [7.2 * cm, 4.6 * cm, 4.8 * cm]),
     Spacer(1, 4),
-    Image(str(REP / "fig_confusion.png"), width=14 * cm, height=6 * cm),
+    fig("fig_confusion.png", 14 * cm),
     Paragraph("Figure 1. Confusion matrices on the 490-image test split.", SMALL),
     Paragraph(NOTES["results"], P),
     Paragraph(NOTES["tradeoffs"], P),
     PageBreak(),
     Paragraph("4. Failure analysis of misclassified edge cases", H2),
-    Image(str(REP / "fig_errors.png"), width=16 * cm, height=9.2 * cm),
+    fig("fig_errors.png", 15.5 * cm),
     Paragraph("Figure 2. Test images misclassified by at least one model (RF = Roboflow; confidence in brackets).",
               SMALL),
     Paragraph(NOTES["failures"], P),

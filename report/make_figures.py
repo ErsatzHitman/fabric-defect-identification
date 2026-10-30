@@ -126,7 +126,7 @@ def main():
     if show:
         cols = 4
         rows_n = (len(show) + cols - 1) // cols
-        fig, axes = plt.subplots(rows_n, cols, figsize=(8, 2.3 * rows_n))
+        fig, axes = plt.subplots(rows_n, cols, figsize=(8, 2.55 * rows_n))
         axes = axes.flatten() if hasattr(axes, "flatten") else [axes]
         for ax in axes:
             ax.axis("off")
@@ -135,7 +135,7 @@ def main():
             ax.imshow(Image.open(p))
             ax.set_title(f"{e['fabric'].replace(' (unknown)', '')} | true: {e['true']}\n"
                          f"RF: {e['roboflow']}\nCNN: {e['cnn']}", fontsize=6.5)
-        fig.tight_layout()
+        fig.tight_layout(h_pad=2.2)
         fig.savefig(REP / "fig_errors.png", dpi=200)
     print(json.dumps({k: v for k, v in summary.items() if k != "errors"}, indent=1)[:4000])
     print(len(errors), "test images misclassified by at least one model")
